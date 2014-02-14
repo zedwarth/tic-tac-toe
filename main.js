@@ -24,14 +24,24 @@ var checkForWinner = function () {
   // Because (NaN === NaN) is always false, we can safely assume
   // that if three spaces in a row are the same, all three spaces are
   // marked by a player, and not all empty.
-
+  // 0 1 2
+  // 3 4 5
+  // 6 7 8
   if ( spaces[0] === spaces[1] && spaces[1] === spaces[2]
     || spaces[3] === spaces[4] && spaces[4] === spaces[5]
     || spaces[6] === spaces[7] && spaces[7] === spaces[8]
-    // TODO: Check for rest of game winning cases
+    // Above: Horizontal wins
+	|| spaces[0] === spaces[3] && spaces[3] === spaces[6]
+    || spaces[1] === spaces[4] && spaces[4] === spaces[7]
+    || spaces[2] === spaces[5] && spaces[5] === spaces[8]
+	// Above: Vertical wins
+	|| spaces[0] === spaces[4] && spaces[4] === spaces[8]
+    || spaces[2] === spaces[4] && spaces[4] === spaces[6]
+	// Above: Diagonal wins
   )
   {
     console.log('somebody won');
+	$(document).trigger('game-win', [currentPlayer]);
     // TODO: Trigger 'game-win' event with the winning player as the event data
   }
 };
@@ -51,7 +61,7 @@ $(document).on('click', '#board .space', function (e) {
 });
 
 $(document).on('game-win', function (e, winner) {
-  // TODO: Alert who won the game
+	alert( winner +" won!");
 });
 
 // Start the game
